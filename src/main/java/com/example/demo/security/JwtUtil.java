@@ -10,6 +10,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.security.PrivateKey;
 import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
@@ -18,7 +19,8 @@ import java.util.stream.Collectors;
 @Component
 public class JwtUtil {
 
-    private static final SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.ES512);
+    private static final SecretKey secretKey = Keys.hmacShaKeyFor(new byte[64]); // 512-bit key
+
     private final long jwtExpirationMs = 86400000; // 24 hours
     private UserRepository userRepository;
 
